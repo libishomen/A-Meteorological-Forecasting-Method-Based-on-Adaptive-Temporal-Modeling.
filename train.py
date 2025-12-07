@@ -217,7 +217,7 @@ def normalize_predict(predictions, std, mean):
 
 
 
-def student(device_ids, device, train_loader, test_loader, batch_size, epochs, num_input, num_pre, img_size, model_ori):
+def train(device_ids, device, train_loader, test_loader, batch_size, epochs, num_input, num_pre, img_size, model_ori):
 
 
     std_array, mean_array = load_stds_means_1(jsonpath)
@@ -297,7 +297,7 @@ def student(device_ids, device, train_loader, test_loader, batch_size, epochs, n
                 torch.save(model_ori.state_dict(), './xiaowei/tau_time_30_my_0_dot_4.pth')
 
             f = open('./xiaowei/tau_time_30_my_0_dot_4.txt', 'a')
-            f.write(str('Student-Epoch:{}\tLoss:{:.4f}'
+            f.write(str('train-Epoch:{}\tLoss:{:.4f}'
                         .format(epoch + 1,loss)))
 
             f.write('\n')
@@ -410,7 +410,7 @@ def run(obj):
                                        model_type="tau", drop_path=0.1, spatio_kernel_enc=3, spatio_kernel_dec = 3)
     load_paral(my_model, "/lixj/fangteng/lowsky_muti/xiaowei/model_time_15.pth")
     model_ori = MY_model_my((num_input, 54, img_size,img_size), my_model)
-    student(device_ids, device, traindataloader, testdataloader, batch_size, epochs, num_input, num_pre, img_size, model_ori)
+    train(device_ids, device, traindataloader, testdataloader, batch_size, epochs, num_input, num_pre, img_size, model_ori)
 
 
 def main(obj):
@@ -423,3 +423,4 @@ def main(obj):
             print(f"Error: {str(e)}")
             traceback.print_exc()
             sys.exit(1)  # 使用sys.exit替代exit()
+
